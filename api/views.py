@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-from api.models import Item, Order
+from api.models import Item, Order, Discount
 import stripe
 
 stripe.api_key = settings.STRIPE_SEC_KEY
@@ -14,7 +14,10 @@ class BaseAPIView(APIView):
     model = None
 
     @staticmethod
-    def get_session(name, price):
+    def get_session(name, price, discs=None, tax=None):
+        discounts = None
+        if discs:
+            discounts = [{'coupon': discs}]
         session = stripe.checkout.Session.create(
             line_items=[{
                 'price_data': {
@@ -26,6 +29,7 @@ class BaseAPIView(APIView):
                 },
                 'quantity': 1,
             }],
+            discounts=discounts,
             mode='payment',
             success_url='http://localhost:8000/',
             cancel_url='http://localhost:8000/',
@@ -46,7 +50,8 @@ class OrderAPIView(BaseAPIView):
 
     def get(self, request, order_id, model=model):
         obj = model.objects.get(pk=order_id)
-        return super(OrderAPIView, self).get_session(name=f'Order #{obj.pk}', price=obj.total_sum_order())
+        discs = Discount.objects.get(order_id=order_id).coupon_id
+        return super(OrderAPIView, self).get_session(name=f'Order #{obj.pk}', price=obj.total_sum_order(), discs=discs)
 
 
 def item(request, item_id):
@@ -58,7 +63,8 @@ def item(request, item_id):
 
 def order(request, order_id):
     order = Order.objects.get(id=order_id)
-    context = {'title': f'Order #{order.id}', 'order': order, 'pc_key': PC_KEY}
+    discount = Discount.objects.get(order_id=order_id)
+    total_sum = int(order.total_sum_order()) * (1 - discount.percent_off/100)
+    context = {'title': f'Order #{order.id}', 'order': order, 'pc_key': PC_KEY, 'discount': discount, 'total_sum': total_sum}
     template_name = 'order.html'
     return render(request, template_name, context)
-

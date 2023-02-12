@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.models import Item, Order
+from api.models import Item, Order, Discount
 
 
 @admin.register(Item)
@@ -17,3 +17,9 @@ class OrderAdminModel(admin.ModelAdmin):
 
     def items(self, obj):
         return list(obj.get_all_items())
+
+
+@admin.register(Discount)
+class DiscountAdminModel(admin.ModelAdmin):
+    fields = ('order', 'name', 'currency', 'percent_off', 'coupon_id')
+    list_display = ('name', 'coupon_id', 'order')

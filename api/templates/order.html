@@ -10,7 +10,8 @@
         <br>
         </div>
     {% endfor %} <br>
-    <h2> Цена заказа: {{ order.total_sum_order }} руб. </h2>
+    <h2> Итоговая скидка: - {{ discount.percent_off }} % </h2>
+    <h2> Цена заказа: {{ total_sum }} руб. </h2>
 {% endblock %}
 {% block url %}
     "{% url 'api:buy_order' order.id %}"
