@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block desc %}
-    Состав заказа:
+    <h2> Состав заказа: </h2>
     {% for item in order.get_all_items %}
         <div>
         Имя продукта: {{ item.name }} <br>
@@ -10,7 +10,7 @@
         <br>
         </div>
     {% endfor %} <br>
-    Цена заказа: {{ order.total_sum_order }} руб.<br>
+    <h2> Цена заказа: {{ order.total_sum_order }} руб. </h2>
 {% endblock %}
 {% block url %}
     "{% url 'api:buy_order' order.id %}"

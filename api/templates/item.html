@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> {{ title }} </title>
-</head>
-<body>
-<div align="center" class="text">
-    <h1> {{ title }} </h1>
+{% extends 'base.html' %}
+{% block desc %}
     Имя продукта: {{ item.name }} <br>
     Описание продукта: {{ item.description }} <br>
-    Цена продукта: {{ item.price }} <br>
-    <button id="buy-button">Buy</button>
-</div>
-<script src="https://js.stripe.com/v3/"></script>
-<script type="text/javascript">
-      const stripe = Stripe("{{ pc_key }}");
-      const buyButton = document.getElementById('buy-button');
-      buyButton.addEventListener('click', function() {
-        fetch("{% url 'api:buy' item.id %}")
-            .then(response => response.json())
-            .then(session => stripe.redirectToCheckout({ sessionId: session.session_id }))
-            .catch(error => console.log(error))
-      });
-    </script>
-</body>
-</html>
+    Цена продукта: {{ item.price }} руб.<br>
+{% endblock %}
+{% block url %}
+    "{% url 'api:buy' item.id %}"
+{% endblock %}
