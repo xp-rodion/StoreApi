@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block desc %}
+    Состав заказа:
+    {% for item in order.get_all_items %}
+        <div>
+        Имя продукта: {{ item.name }} <br>
+        Описание продукта: {{ item.description }} <br>
+        Цена продукта: {{ item.price }} руб.<br>
+        <br>
+        </div>
+    {% endfor %} <br>
+    Цена заказа: {{ order.total_sum_order }} руб.<br>
+{% endblock %}
+{% block url %}
+    "{% url 'api:buy_order' order.id %}"
+{% endblock %}

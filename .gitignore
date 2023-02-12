@@ -1,0 +1,5 @@
+.env
+.idea/
+__pycache__/
+StoreAPI/__pycache__/
+api/__pycache__/

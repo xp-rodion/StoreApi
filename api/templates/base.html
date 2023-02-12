@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {{ title }} </title>
+</head>
+<body>
+<div align="center" class="text">
+    <h1> {{ title }} </h1>
+    {% block desc %}
+
+    {% endblock %}
+    <button id="buy-button">Buy</button>
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+      const stripe = Stripe("{{ pc_key }}");
+      const buyButton = document.getElementById('buy-button');
+      buyButton.addEventListener('click', function() {
+        fetch({% block url %} {% endblock %})
+            .then(response => response.json())
+            .then(session => stripe.redirectToCheckout({ sessionId: session.session_id }))
+            .catch(error => console.log(error))
+      });
+    </script>
+</body>
+</html>
