@@ -1,0 +1,1 @@
+[{"model": "api.discount", "pk": 1, "fields": {"name": "WINTERSALE", "currency": "rub", "percent_off": 10, "coupon_id": "nUKmhRx5"}}]

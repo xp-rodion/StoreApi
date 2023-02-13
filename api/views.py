@@ -1,10 +1,10 @@
+import stripe
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-from api.models import Item, Order, Discount, Tax
-import stripe
+from api.models import Discount, Item, Order, Tax
 
 stripe.api_key = settings.STRIPE_SEC_KEY
 PC_KEY = settings.STRIPE_PUB_KEY

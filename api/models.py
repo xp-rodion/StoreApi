@@ -1,8 +1,7 @@
-from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.db import models
-
 import stripe
+from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 stripe.api_key = settings.STRIPE_SEC_KEY
 
@@ -51,7 +50,7 @@ class Discount(models.Model):
     currency = models.CharField(max_length=4, verbose_name='Валюта', default='rub')
     percent_off = models.IntegerField(verbose_name='Размер скидки', validators=[MinValueValidator(1),
                                                                                 MaxValueValidator(100)])
-    coupon_id = models.CharField(max_length=20, verbose_name='ID купона', null=True, blank=True)
+    coupon_id = models.CharField(max_length=40, verbose_name='ID купона', null=True, blank=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.coupon_id:
@@ -71,7 +70,7 @@ class Tax(models.Model):
     description = models.TextField(verbose_name='Описание налога')
     percentage = models.IntegerField(verbose_name='Размер налога', validators=[MinValueValidator(1),
                                                                                 MaxValueValidator(100)])
-    tax_id = models.CharField(max_length=20, verbose_name='ID такса', null=True, blank=True)
+    tax_id = models.CharField(max_length=40, verbose_name='ID такса', null=True, blank=True)
     jurisdiction = models.CharField(max_length=20, verbose_name='Юрисдикция страны')
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
