@@ -2,7 +2,7 @@
 {% block desc %}
     Имя продукта: {{ item.name }} <br>
     Описание продукта: {{ item.description }} <br>
-    Цена продукта: {{ item.price }} руб.<br>
+    Цена продукта: {{ item.price }} {{ item.get_currency_display }}<br>
 {% endblock %}
 {% block url %}
     "{% url 'api:buy' item.id %}"

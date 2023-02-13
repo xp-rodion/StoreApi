@@ -4,13 +4,21 @@
     <h2> Состав заказа: </h2>
     {% for item in order.get_all_items %}
         <div>
-        Имя продукта: {{ item.name }} <br>
-        Описание продукта: {{ item.description }} <br>
-        Цена продукта: {{ item.price }} руб.<br>
+            Имя продукта: {{ item.name }} <br>
+            Описание продукта: {{ item.description }} <br>
+            Цена продукта: {{ item.price }} руб.<br>
         <br>
         </div>
     {% endfor %} <br>
-    <h2> Итоговая скидка: - {{ discount.percent_off }} % </h2>
+    {% if discount %}
+        <h2> Итоговая скидка: - {{ discount.percent_off }} % </h2>
+        {% if tax %}
+            <h2> Налоги: </h2>
+            {% for item_tax in tax %}
+                <div>{{ item_tax.display_name }} +{{ item_tax.percentage }}% </div> <br>
+             {% endfor %}
+        {% endif %}
+    {% endif %}
     <h2> Цена заказа: {{ total_sum }} руб. </h2>
 {% endblock %}
 {% block url %}
