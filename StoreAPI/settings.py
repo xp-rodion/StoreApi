@@ -29,7 +29,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,33 +77,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StoreAPI.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": 'api_db', # env("NAME"),
-#         "USER": 'api_username', # env("USER"),
-#         "PASSWORD": 'api_password', # env("PASSWORD"),
-#         "HOST": "localhost", # 'localhost', # env("HOST"),
-#         "PORT": '5432', # env("PORT"),
-#     }
-# }
-
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env('DATABASE_NAME'),
-        "USER": env('DATABASE_USER'),
-        "PASSWORD": env('DATABASE_PASS'),
-        "HOST": env('HOST'),
-        "PORT": env('PORT'),
+        "NAME": env('POSTGRES_DB'),
+        "USER": env('POSTGRES_USER'),
+        "PASSWORD": env('POSTGRES_PASSWORD'),
+        "HOST": env('POSTGRES_HOST'),
+        "PORT": env('POSTGRES_PORT'),
     }
 }
+
 
 
 # Password validation

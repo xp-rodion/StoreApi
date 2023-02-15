@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    container_name: web
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver ${SERVER_HOST}:${SERVER_PORT}"
+    volumes:
+      - .:/api/
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+
+volumes:
+  db-data:
