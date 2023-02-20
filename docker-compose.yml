@@ -2,15 +2,15 @@ version: '3.7'
 
 services:
   web:
-    build: .
+    build:
+      dockerfile: Dockerfile
     container_name: web
-    command: >
-      sh -c "python manage.py migrate &&
+    command: sh -c "python manage.py migrate &&
              python manage.py runserver ${SERVER_HOST}:${SERVER_PORT}"
     volumes:
       - .:/api/
     env_file:
-      - .env
+      - ./.env
     environment:
       - POSTGRES_HOST=db
     ports:
@@ -24,9 +24,9 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     env_file:
-      - .env
+      - ./.env
     ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      - 5432:5432
 
 volumes:
   db-data:
