@@ -45,4 +45,14 @@ $ git clone https://github.com/xp-rodion/StoreApi.git
       ```console
       $ sudo docker exec -it web python manage.py loaddata --format=json [Model] > [JSON fixture].json
       ```
-   
+
+## API documentation
+
+1. http://45.8.248.105:8000/admin - admin panel for creating items, taxes, orders and discounts
+2. http://45.8.248.105:8000/api/item/<item_id> - getting the session_id of the item
+3. http://45.8.248.105:8000/api/buy/<item_id> - stripe page for payment of item
+4. http://45.8.248.105:8000/api/buy_order/<order_id> - getting the session_id of the order
+5. http://45.8.248.105:8000/api/order/<order_id> - stripe page for payment of order
+
+# Description: 
+Taxes and discounts are checked by hanging their admin panel on order
