@@ -54,5 +54,8 @@ $ git clone https://github.com/xp-rodion/StoreApi.git
 4. http://45.8.248.105:8000/api/buy_order/<order_id> - getting the session_id of the order
 5. http://45.8.248.105:8000/api/order/<order_id> - stripe page for payment of order
 
+login: admin
+password: 16082003
+
 # Description: 
 Taxes and discounts are checked by hanging their admin panel on order
